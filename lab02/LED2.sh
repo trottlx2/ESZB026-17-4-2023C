@@ -4,7 +4,9 @@
 # Derek Molloy, Exploring Raspberry Pi: Interfacing to the Real World with Embedded Linux,
 # Wiley 2016, ISBN 978-1-119-1868-1, http://www.exploringrpi.com/
 
-LED_GPIO=16  # Usar uma variavel facilita alteracoes futuras na porta usada
+LED_GPIO1=20 #vermelho
+LED_GPIO2=21 #verde
+LED_GPIO3=16 #amarelo
 
 # funcoes Bash
 function setLED
@@ -23,10 +25,22 @@ fi
 echo "O comando passado foi: $1"
 
 if [ "$1" == "setup" ]; then
-	echo "Habilitando a GPIO numero $LED_GPIO"
-	echo $LED_GPIO >> "/sys/class/gpio/export"
+	echo "Habilitando a GPIO numero $LED_GPIO1"
+	echo $LED_GPIO1 >> "/sys/class/gpio/export"
 	sleep 1                        # esperar 1 segundo para garantir que a gpio foi exportada
-	echo "out" >> "/sys/class/gpio/gpio$LED_GPIO/direction"
+	echo "out" >> "/sys/class/gpio/gpio$LED_GPIO1/direction"
+
+ 	echo "Habilitando a GPIO numero $LED_GPIO2"
+	echo $LED_GPIO2 >> "/sys/class/gpio/export"
+	sleep 1                        # esperar 1 segundo para garantir que a gpio foi exportada
+	echo "out" >> "/sys/class/gpio/gpio$LED_GPIO2/direction"
+
+ 	echo "Habilitando a GPIO numero $LED_GPIO3"
+	echo $LED_GPIO3 >> "/sys/class/gpio/export"
+	sleep 1                        # esperar 1 segundo para garantir que a gpio foi exportada
+	echo "out" >> "/sys/class/gpio/gpio$LED_GPIO3/direction"
+
+ 
 elif [ "$1" == "on" ]; then
 	echo "Acendendo o LED"
 	setLED 1                       # 1 eh recebido como $1 na funcao setLED
