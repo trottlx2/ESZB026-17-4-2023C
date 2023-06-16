@@ -13,23 +13,24 @@ function setLED
 {                                      # $1 eh o primeiro argumento passado para a funcao
 	echo $1 >> "/sys/class/gpio/gpio$2/value"
 }
-for i in 1 2 3 4 5; do
 
-	echo "Habilitando a GPIO numero $LED_GPIO1"
-	echo $LED_GPIO1 >> "/sys/class/gpio/export"
-	sleep 1                        # esperar 1 segundo para garantir que a gpio foi exportada
-	echo "out" >> "/sys/class/gpio/gpio$LED_GPIO1/direction"
+echo "Habilitando a GPIO numero $LED_GPIO1"
+echo $LED_GPIO1 >> "/sys/class/gpio/export"
+sleep 1                        # esperar 1 segundo para garantir que a gpio foi exportada
+echo "out" >> "/sys/class/gpio/gpio$LED_GPIO1/direction"
+
+echo "Habilitando a GPIO numero $LED_GPIO2"
+echo $LED_GPIO2 >> "/sys/class/gpio/export"
+sleep 1                        # esperar 1 segundo para garantir que a gpio foi exportada
+echo "out" >> "/sys/class/gpio/gpio$LED_GPIO2/direction"
+
+echo "Habilitando a GPIO numero $LED_GPIO3"
+echo $LED_GPIO3 >> "/sys/class/gpio/export"
+sleep 1                        # esperar 1 segundo para garantir que a gpio foi exportada
+echo "out" >> "/sys/class/gpio/gpio$LED_GPIO3/direction"
+
 	
-	echo "Habilitando a GPIO numero $LED_GPIO2"
-	echo $LED_GPIO2 >> "/sys/class/gpio/export"
-	sleep 1                        # esperar 1 segundo para garantir que a gpio foi exportada
-	echo "out" >> "/sys/class/gpio/gpio$LED_GPIO2/direction"
-	
-	echo "Habilitando a GPIO numero $LED_GPIO3"
-	echo $LED_GPIO3 >> "/sys/class/gpio/export"
-	sleep 1                        # esperar 1 segundo para garantir que a gpio foi exportada
-	echo "out" >> "/sys/class/gpio/gpio$LED_GPIO3/direction"
-	
+for i in 1 2 3 4 5; do
 	echo "Acendendo o LED"
 	setLED 1 $LED_GPIO1 
 	sleep 2
@@ -45,5 +46,14 @@ for i in 1 2 3 4 5; do
 	
 	echo "Piscou: $i"
 done
+
+echo "Desabilitando a GPIO numero $LED_GPIO1"
+echo $LED_GPIO1 >> "/sys/class/gpio/unexport"
+
+echo "Desabilitando a GPIO numero $LED_GPIO2"
+echo $LED_GPIO2 >> "/sys/class/gpio/unexport"
+
+echo "Desabilitando a GPIO numero $LED_GPIO3"
+echo $LED_GPIO3 >> "/sys/class/gpio/unexport"
 
 fi
