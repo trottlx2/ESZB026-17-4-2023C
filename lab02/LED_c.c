@@ -7,8 +7,14 @@
 #include<stdlib.h>
 #include<string.h>
 
-#define GPIO_NUMBER "16"
-#define GPIO4_PATH "/sys/class/gpio/gpio16/"
+#define GPIO_NUMBER3 "16"
+#define GPIO_NUMBER2 "21"
+#define GPIO_NUMBER1 "20"
+
+#define GPIO4_PATH3 "/sys/class/gpio/gpio16/"
+#define GPIO4_PATH2 "/sys/class/gpio/gpio20/"
+#define GPIO4_PATH1 "/sys/class/gpio/gpio21/"
+
 #define GPIO_SYSFS "/sys/class/gpio/"
 
 void writeGPIO(char filename[], char value[]){
@@ -19,44 +25,44 @@ void writeGPIO(char filename[], char value[]){
 }
 
 int main(int argc, char* argv[]){
-   if(argc!=2){                        // o nome do programa eh o argumento 1
-      printf("Numero incorreto de argumentos\n");
-      printf(" uso: ./LED_c comando\n");
-      printf(" onde comando pode ser: setup, on, off, status, ou close\n");
-      return 2;                        // numero invalido de argumentos
-   }
-   printf("Iniciando o programa em C para alterar a gpio %s.\n",GPIO_NUMBER);
-   if(strcmp(argv[1],"setup")==0){
-      printf("Habilitando a gpio\n");
-      writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER);
-      usleep(100000);                  // aguarda 100ms
-      writeGPIO(GPIO4_PATH "direction", "out");
-   }
-   else if(strcmp(argv[1],"close")==0){
-      printf("Desabilitando a gpio\n");
-      writeGPIO(GPIO_SYSFS "unexport", GPIO_NUMBER);
-   }
-   else if(strcmp(argv[1],"on")==0){
+
+   printf("Habilitando a gpio\n");
+   writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER1);
+   usleep(100000);                  // aguarda 100ms
+   writeGPIO(GPIO4_PATH1 "direction", "out");
+   
+   writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER2);
+   usleep(100000);                  // aguarda 100ms
+   writeGPIO(GPIO4_PATH2 "direction", "out");
+   
+   writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER3);
+   usleep(100000);                  // aguarda 100ms
+   writeGPIO(GPIO4_PATH3 "direction", "out");
+   for(contador = 0; contador < 5; contador++){
       printf("Acendendo o LED\n");
-      writeGPIO(GPIO4_PATH "value", "1");
-   }
-   else if (strcmp(argv[1],"off")==0){
+      writeGPIO(GPIO4_PATH1 "value", "1");
+      usleep(2000000); 
       printf("Desligando o LED\n");
-      writeGPIO(GPIO4_PATH "value", "0");
+      writeGPIO(GPIO4_PATH1 "value", "0");
+      
+      printf("Acendendo o LED\n");
+      writeGPIO(GPIO4_PATH2 "value", "1");
+      usleep(1000000); 
+      printf("Desligando o LED\n");
+      writeGPIO(GPIO4_PATH2 "value", "0");
+
+      printf("Acendendo o LED\n");
+      writeGPIO(GPIO4_PATH3 "value", "1");
+      usleep(1000000); 
+      printf("Desligando o LED\n");
+      writeGPIO(GPIO4_PATH3 "value", "0");  
    }
-   else if (strcmp(argv[1],"status")==0){
-      FILE* fp;                        // cria um ponteiro fp
-      char line[80], fullFilename[100];
-      sprintf(fullFilename, GPIO4_PATH "/value");
-      fp = fopen(fullFilename, "rt");  // abre o arquivo para leitura de texto
-      while (fgets(line, 80, fp) != NULL){
-         printf("O estado do LED eh %s", line);
-      }
-      fclose(fp);
-   }
-   else{
-      printf("Comando invalido!\n");
-   }
+
+   printf("Desabilitando a gpio\n");
+   writeGPIO(GPIO_SYSFS "unexport", GPIO_NUMBER1);
+   writeGPIO(GPIO_SYSFS "unexport", GPIO_NUMBER2);
+   writeGPIO(GPIO_SYSFS "unexport", GPIO_NUMBER3);
+   
    printf("Fim do programa em C.\n");
    return 0;
 }
