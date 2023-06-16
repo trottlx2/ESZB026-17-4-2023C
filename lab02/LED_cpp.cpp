@@ -9,8 +9,12 @@
 #include<unistd.h>
 using namespace std;
 
-#define GPIO_NUMBER "16"
-#define GPIO_PATH "/sys/class/gpio/gpio16/"
+#define GPIO_NUMBER3 "16"
+#define GPIO_NUMBER2 "21"
+#define GPIO_NUMBER1 "20"
+#define GPIO_PATH3 "/sys/class/gpio/gpio16/"
+#define GPIO_PATH2 "/sys/class/gpio/gpio21/"
+#define GPIO_PATH1 "/sys/class/gpio/gpio20/"
 #define GPIO_SYSFS "/sys/class/gpio/"
 
 void writeGPIO(string path, string filename, string value){
@@ -21,43 +25,46 @@ void writeGPIO(string path, string filename, string value){
 }
 
 int main(int argc, char* argv[]){
-   if(argc!=2){
-      cout << "Numero incorreto de argumentos" << endl;
-      cout << " uso: ./LED_c comando" << endl;
-      cout << " onde comando pode ser: setup, on, off, status, ou close" << endl;
-      return 2;
-   }
-   string cmd(argv[1]);
-   cout << "Iniciando o programa em C++ para alterar a gpio " << GPIO_NUMBER << endl;
-
-   if(cmd=="on"){
+   cout << "Habilitando a gpio" << endl;
+   writeGPIO(string(GPIO_SYSFS), "export", GPIO_NUMBER1);
+   usleep(100000);
+   writeGPIO(string(GPIO_PATH1), "direction", "out");
+   
+   writeGPIO(string(GPIO_SYSFS), "export", GPIO_NUMBER2);
+   usleep(100000);
+   writeGPIO(string(GPIO_PATH2), "direction", "out");
+   
+   writeGPIO(string(GPIO_SYSFS), "export", GPIO_NUMBER3);
+   usleep(100000);
+   writeGPIO(string(GPIO_PATH3), "direction", "out");
+   
+   for(int n = 0; n <= 5; n++){
       cout << "Acendendo o LED" << endl;
-      writeGPIO(string(GPIO_PATH), "value", "1");
-   }
-   else if (cmd=="off"){
+      writeGPIO(string(GPIO_PATH1), "value", "1");
+      usleep(2000000);
       cout << "Desligando o LED" << endl;
-      writeGPIO(string(GPIO_PATH), "value", "0");
-   }
-   else if (cmd=="setup"){
-      cout << "Habilitando a gpio" << endl;
-      writeGPIO(string(GPIO_SYSFS), "export", GPIO_NUMBER);
-      usleep(100000);
-      writeGPIO(string(GPIO_PATH), "direction", "out");
-   }
-   else if (cmd=="close"){
-      cout << "Desabilitando a gpio" << endl;
-      writeGPIO(string(GPIO_SYSFS), "unexport", GPIO_NUMBER);
-   }
-   else if (cmd=="status"){
-      std::fstream fs;
-      fs.open( GPIO_PATH "value", std::fstream::in);
-      string line;
-      while(getline(fs,line)) cout << "O estado do LED eh " << line << endl;
-      fs.close();
-   }
-   else{
-      cout << "Comando invalido!" << endl;
-   }
+      writeGPIO(string(GPIO_PATH1), "value", "0");
+
+      cout << "Acendendo o LED" << endl;
+      writeGPIO(string(GPIO_PATH2), "value", "1");
+      usleep(1000000);
+      cout << "Desligando o LED" << endl;
+      writeGPIO(string(GPIO_PATH2), "value", "0");
+
+      cout << "Acendendo o LED" << endl;
+      writeGPIO(string(GPIO_PATH3), "value", "1");
+      usleep(1000000);
+      cout << "Desligando o LED" << endl;
+      writeGPIO(string(GPIO_PATH3), "value", "0");
+    }
+
+
+   cout << "Desabilitando a gpio" << endl;
+   writeGPIO(string(GPIO_SYSFS), "unexport", GPIO_NUMBER1);
+   writeGPIO(string(GPIO_SYSFS), "unexport", GPIO_NUMBER2);
+   writeGPIO(string(GPIO_SYSFS), "unexport", GPIO_NUMBER3);
+
+
    cout << "Fim do programa em C++." << endl;
    return 0;
 }
