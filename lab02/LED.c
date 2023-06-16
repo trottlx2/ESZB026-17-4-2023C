@@ -3,9 +3,10 @@
 * Wiley 2016, ISBN 978-1-119-1868-1, http://www.exploringrpi.com/
 */
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 #define GPIO_NUMBER3 "16"
 #define GPIO_NUMBER2 "21"
@@ -17,53 +18,53 @@
 
 #define GPIO_SYSFS "/sys/class/gpio/"
 
-void writeGPIO(char filename[], char value[]){
-   FILE* fp;                           // cria um ponteiro fp
-   fp = fopen(filename, "w+");         // abre o arquivo para escrita
-   fprintf(fp, "%s", value);           // grava o valor no arquivo
-   fclose(fp);                         // fecha o arquivo
+void writeGPIO(char filename[], char value[]) {
+   FILE* fp;
+   fp = fopen(filename, "w+");
+   fprintf(fp, "%s", value);
+   fclose(fp);
 }
 
-int main(int argc, char* argv[]){
-
+int main(int argc, char* argv[]) {
    printf("Habilitando a gpio\n");
    writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER1);
-   usleep(100000);                  // aguarda 100ms
+   usleep(100000);
    writeGPIO(GPIO4_PATH1 "direction", "out");
-   
+
    writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER2);
-   usleep(100000);                  // aguarda 100ms
+   usleep(100000);
    writeGPIO(GPIO4_PATH2 "direction", "out");
-   
+
    writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER3);
-   usleep(100000);                  // aguarda 100ms
+   usleep(100000);
    writeGPIO(GPIO4_PATH3 "direction", "out");
-   for(contador = 0; contador < 5; contador++){
+
+   int contador;
+   for (contador = 0; contador < 5; contador++) {
       printf("Acendendo o LED\n");
       writeGPIO(GPIO4_PATH1 "value", "1");
-      usleep(2000000); 
+      usleep(2000000);
       printf("Desligando o LED\n");
       writeGPIO(GPIO4_PATH1 "value", "0");
-      
+
       printf("Acendendo o LED\n");
       writeGPIO(GPIO4_PATH2 "value", "1");
-      usleep(1000000); 
+      usleep(1000000);
       printf("Desligando o LED\n");
       writeGPIO(GPIO4_PATH2 "value", "0");
 
       printf("Acendendo o LED\n");
       writeGPIO(GPIO4_PATH3 "value", "1");
-      usleep(1000000); 
+      usleep(1000000);
       printf("Desligando o LED\n");
-      writeGPIO(GPIO4_PATH3 "value", "0");  
+      writeGPIO(GPIO4_PATH3 "value", "0");
    }
 
    printf("Desabilitando a gpio\n");
    writeGPIO(GPIO_SYSFS "unexport", GPIO_NUMBER1);
    writeGPIO(GPIO_SYSFS "unexport", GPIO_NUMBER2);
    writeGPIO(GPIO_SYSFS "unexport", GPIO_NUMBER3);
-   
+
    printf("Fim do programa em C.\n");
    return 0;
 }
-
