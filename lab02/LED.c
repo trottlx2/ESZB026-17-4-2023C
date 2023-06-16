@@ -13,27 +13,28 @@
 
 #define GPIO_SYSFS "/sys/class/gpio/"
 
-void writeGPIO(char filename[], char value[]) {
-   FILE* fp;
-   fp = fopen(filename, "w+");
-   fprintf(fp, "%s", value);
-   fclose(fp);
+void writeGPIO(char filename[], char value[]){
+   FILE* fp;                           // cria um ponteiro fp
+   fp = fopen(filename, "w+");         // abre o arquivo para escrita
+   fprintf(fp, "%s", value);           // grava o valor no arquivo
+   fclose(fp);                         // fecha o arquivo
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]){
+
    printf("Habilitando a gpio\n");
    writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER1);
-   usleep(100000);
-   writeGPIO(GPIO4_PATH1 "direction", "out");
-
+   usleep(100000);                  // aguarda 100ms
+   writeGPIO(GPIO_NUMBER1 "direction", "out");
+   
    writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER2);
-   usleep(100000);
-   writeGPIO(GPIO4_PATH2 "direction", "out");
-
+   usleep(100000);                  // aguarda 100ms
+   writeGPIO(GPIO_NUMBER2 "direction", "out");
+   
    writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER3);
-   usleep(100000);
-   writeGPIO(GPIO4_PATH3 "direction", "out");
-
+   usleep(100000);                  // aguarda 100ms
+   writeGPIO(GPIO_NUMBER3 "direction", "out");
+   
    int contador;
    for (contador = 0; contador < 5; contador++) {
       printf("Acendendo o LED\n");
