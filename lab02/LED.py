@@ -6,44 +6,62 @@
 
 import sys
 from time import sleep
-LED_PATH = "/sys/class/gpio/gpio16/"
+LED_PATH01 = "/sys/class/gpio/gpio20/"
+LED_PATH02 = "/sys/class/gpio/gpio21/"
+LED_PATH03 = "/sys/class/gpio/gpio16/"
 SYSFS_DIR = "/sys/class/gpio/"
-LED_NUMBER = "16"
 
-def writeLED ( filename, value, path=LED_PATH ):
+LED_GPIO1= "20" #vermelho
+LED_GPIO2= "21" #verde
+LED_GPIO3= "16" #amarelo
+
+def writeLED ( filename, value, path):
 	"Esta funcao escreve o valor 'value' no arquivo 'path+filename'"
 	fo = open( path + filename,"w")
 	fo.write(value)
 	fo.close()
 	return
 
-print("Iniciando o script Python para alterar a gpio " + LED_NUMBER + ".")
-if len(sys.argv)!=2:
-	print("Numero incorreto de argumentos")
-	print(" uso: ./LED.py comando")
-	print(" onde comando pode ser: setup, on, off, status, ou close")
-	sys.exit(2)
 
-if sys.argv[1]=="on":
+print("Habilitando a gpio")
+writeLED (filename="export", value=20, path=SYSFS_DIR)
+sleep(0.1)
+writeLED (filename="direction", value="out", path = LED_PATH01)
+
+writeLED (filename="export", value=21, path=SYSFS_DIR)
+sleep(0.1)
+writeLED (filename="direction", value="out", path = LED_PATH02)
+
+writeLED (filename="export", value=16, path=SYSFS_DIR)
+sleep(0.1)
+writeLED (filename="direction", value="out", path = LED_PATH03)
+
+
+for i in range (5):
 	print("Acendendo o LED")
-	writeLED (filename="value", value="1")
-elif sys.argv[1]=="off":
+	writeLED (filename="value", value="1", path = LED_PATH01)
+	sleep(2)
 	print("Desligando o LED")
-	writeLED (filename="value", value="0")
-elif sys.argv[1]=="setup":
-	print("Habilitando a gpio")
-	writeLED (filename="export", value=LED_NUMBER, path=SYSFS_DIR)
-	sleep(0.1)
-	writeLED (filename="direction", value="out")
-elif sys.argv[1]=="close":
-	print("Desabilitando a gpio")
-	writeLED (filename="unexport", value=LED_NUMBER, path=SYSFS_DIR)
-elif sys.argv[1]=="status":
-	print("Pegando o status da gpio")
-	fo = open( LED_PATH + "value", "r")
-	print(fo.read())
-	fo.close()
-else:
-	print("Comando invalido!")
+	writeLED (filename="value", value="0", path = LED_PATH01)
+
+	print("Acendendo o LED")
+	writeLED (filename="value", value="1", path = LED_PATH02)
+	sleep(1)
+	print("Desligando o LED")
+	writeLED (filename="value", value="0", path = LED_PATH02)
+
+	print("Acendendo o LED")
+	writeLED (filename="value", value="1", path = LED_PATH03)
+	sleep(1)
+	print("Desligando o LED")
+	writeLED (filename="value", value="0", path = LED_PATH03)
+
+
+
+print("Desabilitando a gpio")
+writeLED (filename="unexport", value=21, path=SYSFS_DIR)
+writeLED (filename="unexport", value=20, path=SYSFS_DIR)
+writeLED (filename="unexport", value=16, path=SYSFS_DIR)
+
 
 print("Fim do script Python.")
