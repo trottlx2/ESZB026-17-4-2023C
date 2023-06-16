@@ -24,15 +24,15 @@ def writeLED ( filename, value, path):
 
 
 print("Habilitando a gpio")
-writeLED (filename="export", value=20, path=SYSFS_DIR)
+writeLED (filename="export", value="20", path=SYSFS_DIR)
 sleep(0.1)
 writeLED (filename="direction", value="out", path = LED_PATH01)
 
-writeLED (filename="export", value=21, path=SYSFS_DIR)
+writeLED (filename="export", value="21", path=SYSFS_DIR)
 sleep(0.1)
 writeLED (filename="direction", value="out", path = LED_PATH02)
 
-writeLED (filename="export", value=16, path=SYSFS_DIR)
+writeLED (filename="export", value="16", path=SYSFS_DIR)
 sleep(0.1)
 writeLED (filename="direction", value="out", path = LED_PATH03)
 
@@ -59,9 +59,9 @@ for i in range (5):
 
 
 print("Desabilitando a gpio")
-writeLED (filename="unexport", value=21, path=SYSFS_DIR)
-writeLED (filename="unexport", value=20, path=SYSFS_DIR)
-writeLED (filename="unexport", value=16, path=SYSFS_DIR)
+writeLED (filename="unexport", value="21", path=SYSFS_DIR)
+writeLED (filename="unexport", value="20", path=SYSFS_DIR)
+writeLED (filename="unexport", value="16", path=SYSFS_DIR)
 
 
 print("Fim do script Python.")
