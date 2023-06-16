@@ -2,7 +2,7 @@
 * Derek Molloy, Exploring Raspberry Pi: Interfacing to the Real World with Embedded Linux,
 * Wiley 2016, ISBN 978-1-119-1868-1, http://www.exploringrpi.com/
 */
-
+#include <unistd.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
