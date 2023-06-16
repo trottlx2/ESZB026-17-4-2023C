@@ -25,15 +25,15 @@ int main(int argc, char* argv[]){
    printf("Habilitando a gpio\n");
    writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER1);
    usleep(100000);                  // aguarda 100ms
-   writeGPIO(GPIO4_PATH1 "direction", "out");
+   writeGPIO(GPIO_NUMBER1 "direction", "out");
    
    writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER2);
    usleep(100000);                  // aguarda 100ms
-   writeGPIO(GPIO4_PATH2 "direction", "out");
+   writeGPIO(GPIO_NUMBER2 "direction", "out");
    
    writeGPIO(GPIO_SYSFS "export", GPIO_NUMBER3);
    usleep(100000);                  // aguarda 100ms
-   writeGPIO(GPIO4_PATH3 "direction", "out");
+   writeGPIO(GPIO_NUMBER3 "direction", "out");
    
    int contador;
    for (contador = 0; contador < 5; contador++) {
