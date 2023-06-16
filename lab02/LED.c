@@ -38,7 +38,7 @@ int main(int argc, char* argv[]){
    writeGPIO(GPIO4_PATH3 "direction", "out");
 
    
-   int contador;
+int contador;
    for (contador = 0; contador < 5; contador++) {
       printf("Acendendo o LED\n");
       writeGPIO(GPIO4_PATH1 "value", "1");
