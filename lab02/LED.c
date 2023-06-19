@@ -8,8 +8,8 @@
 #define GPIO_NUMBER1 "20"
 
 #define GPIO4_PATH3 "/sys/class/gpio/gpio16/"
-#define GPIO4_PATH2 "/sys/class/gpio/gpio20/"
-#define GPIO4_PATH1 "/sys/class/gpio/gpio21/"
+#define GPIO4_PATH2 "/sys/class/gpio/gpio21/"
+#define GPIO4_PATH1 "/sys/class/gpio/gpio20/"
 
 #define GPIO_SYSFS "/sys/class/gpio/"
 
