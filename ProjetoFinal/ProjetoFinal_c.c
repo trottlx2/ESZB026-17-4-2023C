@@ -52,9 +52,15 @@ int main(){
       pinMode(pino_PWM,OUTPUT);	           // configura GPIO23 como saida
       softPwmCreate(pino_PWM, 1, range);         // inicializa PWM por software
       
-      brilho = floor(resultado / 8);
-      printf("brilho [%d] \n",brilho);
-      softPwmWrite (pino_PWM, brilho);
+      if (resultado > 700){
+         printf("desligado [%d] \n",brilho);
+         softPwmWrite (pino_PWM, 0);       
+      }
+      else{ 
+         printf("brilho [%d] \n",brilho);
+         softPwmWrite (pino_PWM, 255);   
+      }
+
       delay (10);
    }
    
