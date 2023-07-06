@@ -40,11 +40,11 @@ int main(){
       char *subString; // the "result"
       subString = strtok(receive,"\n");
       int resultado = atoi(subString);
-	 
+      printf("Valor [%d] \n",resultado);
       if (count==0) printf("Nao houve resposta!\n");
       else printf("Valor [%d] caracteres: %s\n",resultado,subString);
 
-
+      
       int pino_PWM = 23;                         // pwm por software na GPIO23
       int brilho;
       int range = 100;                           // periodo do PWM = 100us*range
@@ -52,16 +52,17 @@ int main(){
       pinMode(pino_PWM,OUTPUT);	           // configura GPIO23 como saida
       softPwmCreate(pino_PWM, 1, range);         // inicializa PWM por software
       
-      if (resultado > 700){
+      if (resultado > 60){
          printf("desligado [%d] \n",brilho);
-         softPwmWrite (pino_PWM, 0);       
+         softPwmWrite (pino_PWM, 255);       
       }
       else{ 
          printf("brilho [%d] \n",brilho);
-         softPwmWrite (pino_PWM, 255);   
+         softPwmWrite (pino_PWM, 0);   
       }
 
-      delay (10);
+    //  delay (10);
+      usleep(100000);     
    }
    
    close(file);
