@@ -11,26 +11,30 @@
 #define pino_PWM0 18                    // o PWM sera acionado na GPIO18
 
 int main() {                            // este programa deve ser rodado com 'sudo'
-   int dc, ciclos;
+   int i, j;
    wiringPiSetupGpio();                 // usa a numeracao da GPIO
    pinMode(pino_PWM0, PWM_OUTPUT);      // configura a GPIO18 com o PWM por hardware
 
    // Ajustando a frequencia do PWM em 10kHz com 128 passos de duty cycle
-   // frequencia PWM = 19,2 MHz / (divisor * range)
-   // 10000 = 19200000 / (divisor * 128) => divisor = 15
+   // frequencia PWM = 261,6 Hz / (divisor * range)
+   // 261.6  = 19.2MHz  / (divisor * range) => divisor = 15
    pwmSetMode(PWM_MODE_MS);             // usando frequencia fixa
-   pwmSetRange(128);                    // passos do duty cycle (max=4096)
-   pwmSetClock(15);                     // fornece uma frequencia de 10kHz (max=4096)
+   pwmSetRange(302);                    // passos do duty cycle (max=4096)
+   pwmSetClock(243);                     // fornece uma frequencia de 10kHz (max=4096)
    printf("Iniciando...\n");
-   for(ciclos = 0; ciclos < 4; ciclos++){  // variando o duty cycle
-      for(dc = 0; dc < 128; dc++){
-         pwmWrite(pino_PWM0, dc);
-         usleep(10000);
-      }
-      for(dc = 128; dc >= 0; dc--){
-         pwmWrite(pino_PWM0, dc);
-         usleep(10000);
-      }
+  // variando o duty cycle
+   for (i = 0; i<3;i++){
+   	pwmWrite(pino_PWM0, 151);
+   	usleep(150000);
+   	pwmWrite(pino_PWM0,0);
+   	usleep(150000); 
+   } 
+   usleep(300000);
+   for (j = 0; j<2; j++){
+       pwmWrite(pino_PWM0,151);
+       usleep(150000);
+       pwmWrite(pino_PWM0,0);
+       usleep(150000);
    }
    printf("Fim.\n");
    return 0;                            // a saida PWM permanece ligada apos o termino do programa
