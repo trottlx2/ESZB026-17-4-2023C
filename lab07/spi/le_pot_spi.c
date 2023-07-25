@@ -11,7 +11,7 @@
 #include <fcntl.h>            // para O_RDWR
 #include <stdio.h>            // para printf()
 #include <string.h>           // para memset()
-
+#include <unistd.h>
 #define NRO_MEDIDAS 1000
 
 /******************************************************************
