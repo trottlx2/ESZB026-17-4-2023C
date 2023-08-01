@@ -43,7 +43,7 @@ void loop(){
           
           }*/
           else{
-            media = media*0.5 + voltagem*0.5;
+            media = media*0.65 + voltagem*0.35;
 //''            contador = contador + 1;
           }
           int final = (50-((voltagem-media)*1000.0));

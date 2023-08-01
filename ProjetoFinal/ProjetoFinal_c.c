@@ -7,7 +7,7 @@
 #include <termios.h>
 #include <string.h>
 #include <math.h>
-
+#include <>
 int main(){
    int file, count;
    if ((file = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY))<0){
@@ -52,8 +52,8 @@ int main(){
       pinMode(pino_PWM,OUTPUT);	           // configura GPIO23 como saida
       softPwmCreate(pino_PWM, 1, range);         // inicializa PWM por software
       
-      if (resultado > 60){
-         printf("desligado [%d] \n",brilho);
+      if (resultado < 30){
+         printf("Detectado inspiração \n");
          softPwmWrite (pino_PWM, 255);       
       }
       else{ 
@@ -62,7 +62,7 @@ int main(){
       }
 
     //  delay (10);
-      usleep(100000);     
+      usleep(10000);     
    }
    
    close(file);
