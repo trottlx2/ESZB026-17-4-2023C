@@ -47,10 +47,10 @@ int main(){
       subString = strtok(receive,"\n");
       int resultado = atoi(subString);
       //printf("Valor [%d] \n",resultado);
-      if (count==0) printf("Nao houve resposta!\n");
-      else{
+      //if (count==0) printf("Nao houve resposta!\n");
+      //else{
          //printf("Valor [%d] caracteres: %s\n",resultado,subString);
-
+      while(1){
       
          int pino_PWM = 23;                         // pwm por software na GPIO23
          int brilho;

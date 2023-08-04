@@ -10,11 +10,15 @@ int insp_flag = 0;
 int exp_flag = 0;
 int insp_cont = 0;
 int exp_cont = 0;
-
+int apneia = 0;
+int apneia_grave = 0;
+int tmp_insp = 0;
+int tmp_exp = 0;
 void setup(){
    // Configura a serial: baud rate de 115200, 8-bit, sem paridade, 1 stop bit
    Serial.begin(115200, SERIAL_8N1);
    pinMode(7, OUTPUT);
+   pinMode(10,OUTPUT);
 }
 
 void loop(){
@@ -65,11 +69,15 @@ void loop(){
             insp_flag = 0;
             exp_flag = 1;
             exp_cont = 0;
+            tmp_exp = 0;
+            digitalWrite(7, LOW);
          }
          else if( final > 70){
             insp_flag = 1;
             exp_flag = 0;
             insp_cont = 0;
+            tmp_insp = 0;
+            digitalWrite(7, LOW);
          }
          
          if (insp_flag == 1){
@@ -78,14 +86,45 @@ void loop(){
          if (exp_flag == 1){
             exp_cont += 1;
          }
-         if (exp_cont > 70){
+         if (insp_cont > 100 && tmp_insp ==0){
            digitalWrite(7, HIGH);
+           apneia = apneia + 1;
+           tmp_insp = 1;
+         }
+         if (exp_cont > 100 && tmp_exp ==0){
+           digitalWrite(7, HIGH);
+           apneia = apneia + 1;
+           tmp_exp = 1;
+         }
+         if (insp_cont > 200 || insp_cont > 200){
+            delay(1000);
+            int tempo = 400;
+            tone(10,440,tempo); //LA
+            delay(tempo);
+            tone(10,294,tempo); //RE
+            delay(tempo);
+            tone(10,349,tempo/2); //FA - O tempo/2 faz com que demore metade do valor estipulado anteriormente, pois essa parte é mais rápida
+            delay(tempo/2);
+            tone(10,392,tempo/2); //SOL
+            delay(tempo/2);
+            tone(10,440,tempo); //LA
+            delay(tempo);
+            tone(10,294,tempo); //RE
+            delay(tempo);
+            tone(10,349,tempo/2); //FA
+            delay(tempo/2);
+            tone(10,392,tempo/2); //SOL
+            delay(tempo/2);
+            tone(10,330,tempo); //MI
+            delay(tempo);
+            apneia_grave = apneia_grave + 1;
          }
          //Serial.println("Insp_flag = %d; \tInsp_cont = %d, \tExp_flag = %d, \texp_cont = %d; \tvalor = %d\n",insp_flag, insp_cont, exp_flag, exp_cont, final);
          Serial.print("Insp_flag:"); Serial.println(insp_flag); 
          Serial.print("Insp_cont:"); Serial.println(insp_cont);
          Serial.print("Exp_flag 1:"); Serial.println(exp_flag);
          Serial.print("exp_cont:"); Serial.println(exp_cont);
+         Serial.print("Apneia:"); Serial.println(apneia);
          Serial.print("valor:");Serial.println(final);
       }
       
