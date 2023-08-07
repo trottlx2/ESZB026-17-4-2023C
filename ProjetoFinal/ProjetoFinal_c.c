@@ -30,35 +30,40 @@ int main(){
    tcflush(file, TCIFLUSH);            // descarta informacao no arquivo
    tcsetattr(file, TCSANOW, &options); // aplica alteracoes imediatamente
    
+  /* if ((count = write(file, "0", 1))<0){
+      perror("Falha ao escrever na saida.\n");
+      return -1;
+   }   
+   usleep(1000000);                     // Espera 100ms pela resposta do Arduino
+
+   tcflush(file, TCIFLUSH);            // descarta informacao no arquivo
+   tcsetattr(file, TCSANOW, &options); // aplica alteracoes imediatamente*/
+   
+
+   
    while(1){
-      if ((count = write(file, "1", 1))<0){
-	      perror("Falha ao escrever na saida.\n");
-	      return -1;
+       if ((count = write(file, "1", 1))<0){
+         perror("Falha ao escrever na saida.\n");
+         return -1;
       }   
       usleep(100000);                     // Espera 100ms pela resposta do Arduino
-
-      unsigned char receive[6];         // cria um buffer para receber os dados
-      if ((count = read(file, (void*)receive, 6))<0){        // recebe os dados
+     unsigned char receive[7];         // cria um buffer para receber os dados
+      if ((count = read(file, (void*)receive, 7))<0){        // recebe os dados
       	 perror("Falha ao ler da entrada\n");
       	 return -1;
       }
       
-      char *subString; // the "result"
+      printf("Valores \t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t(%d) \n",receive[0],receive[1],receive[2],receive[3],receive[4],receive[5],receive[6],count);
+      /*char *subString; // the "result"
       subString = strtok(receive,"\n");
       int resultado = atoi(subString);
-      //printf("Valor [%d] \n",resultado);
-      //if (count==0) printf("Nao houve resposta!\n");
-      //else{
-         //printf("Valor [%d] caracteres: %s\n",resultado,subString);
-      while(1){
+      //printf("Valor [%d] \n",resultado);*/
+      int resultado = receive[6];
+      if (count==0) ;//printf("Nao houve resposta!\n");
+      else{
+         //printf("Valor [%d] caracteres\n",resultado);
+   
       
-         int pino_PWM = 23;                         // pwm por software na GPIO23
-         int brilho;
-         int range = 100;                           // periodo do PWM = 100us*range
-         wiringPiSetupGpio();                       // usar a numeracao GPIO, nao WPi
-         pinMode(pino_PWM,OUTPUT);	           // configura GPIO23 como saida
-         softPwmCreate(pino_PWM, 1, range);         // inicializa PWM por software
-         
          if (resultado < 30){
             insp_flag = 0;
             exp_flag = 1;
@@ -76,28 +81,28 @@ int main(){
          if (exp_flag == 1){
             exp_cont += 1;
          }
-         printf("Insp_flag = %d; \tInsp_cont = %d, \tExp_flag = %d, \texp_cont = %d; \tvalor = %d\n",insp_flag, insp_cont, exp_flag, exp_cont, resultado);
+         //printf("Insp_flag = %d; \tInsp_cont = %d, \tExp_flag = %d, \texp_cont = %d; \tvalor = %d\n",insp_flag, insp_cont, exp_flag, exp_cont, resultado);
       }
          
          
-         //printf("Detectado expiração \n");
-         //while (1){
-         //   char *subString; // the "result"
-         //   subString = strtok(receive,"\n");
-        //    int resultado = atoi(subString);
-        //    if (resultado < 35 || resultado < 35){
-       //        break;
-         //      }
-        //    }
-       //  softPwmWrite (pino_PWM, 255);       
+      //printf("Detectado expiração \n");
+      //while (1){
+      //   char *subString; // the "result"
+      //   subString = strtok(receive,"\n");
+      //    int resultado = atoi(subString);
+      //    if (resultado < 35 || resultado < 35){
+      //        break;
+      //      }
+      //    }
+      //  softPwmWrite (pino_PWM, 255);       
       //}
       //else{ 
       //   printf("brilho [%d] \n",brilho);
       //   softPwmWrite (pino_PWM, 0);   
       // }
 
-    //  delay (10);
-      usleep(10000); //espera 10ms = 10E-3 s     
+      //  delay (10);
+      //usleep(100000); //espera 10ms = 10E-3 s     
    }
    
    close(file);
