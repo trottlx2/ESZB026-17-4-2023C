@@ -9,6 +9,8 @@
 #include <math.h>
 //#include <>
 
+#define TAMANHO 100
+
 int insp_flag = 0;
 int exp_flag = 0;
 int insp_cont = 0;
@@ -41,24 +43,39 @@ int main(){
    
 
    
-   while(1){
-       if ((count = write(file, "1", 1))<0){
+   //while(1){
+      unsigned char lista_valores[TAMANHO];
+      if ((count = write(file, "1", 1))<0){
          perror("Falha ao escrever na saida.\n");
          return -1;
       }   
       usleep(100000);                     // Espera 100ms pela resposta do Arduino
-     unsigned char receive[7];         // cria um buffer para receber os dados
-      if ((count = read(file, (void*)receive, 7))<0){        // recebe os dados
+      unsigned char receive[TAMANHO+7];         // cria um buffer para receber os dados
+      if ((count = read(file, (void*)receive, TAMANHO+7))<0){        // recebe os dados
       	 perror("Falha ao ler da entrada\n");
       	 return -1;
       }
       
-      printf("Valores \t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t(%d) \n",receive[0],receive[1],receive[2],receive[3],receive[4],receive[5],receive[6],count);
-      /*char *subString; // the "result"
-      subString = strtok(receive,"\n");
-      int resultado = atoi(subString);
-      //printf("Valor [%d] \n",resultado);*/
-      int resultado = receive[6];
+      printf("Valores \t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t(%d)\n",receive[0],receive[1],receive[2],receive[3],receive[4],receive[5],receive[6],count);
+      
+      for (int i = 7; i< TAMANHO+7; i++){
+         lista_valores[i-7] = receive[i];
+         //printf("%d ",i);
+      }
+      
+      printf("\npegou\n");
+     
+      FILE *fp_saida;
+      fp_saida = fopen ("/home/pi/Projeto.txt", "w+");
+      for ( int ii = 0; ii < TAMANHO; ii++ )
+      {
+		   fprintf(fp_saida,"%f %d\n", ii/10.0, lista_valores[ii]);
+	   }
+	   fclose(fp_saida);
+      
+      printf("gravou\n");
+
+      /*int resultado = receive[6];
       if (count==0) ;//printf("Nao houve resposta!\n");
       else{
          //printf("Valor [%d] caracteres\n",resultado);
@@ -81,29 +98,8 @@ int main(){
          if (exp_flag == 1){
             exp_cont += 1;
          }
-         //printf("Insp_flag = %d; \tInsp_cont = %d, \tExp_flag = %d, \texp_cont = %d; \tvalor = %d\n",insp_flag, insp_cont, exp_flag, exp_cont, resultado);
-      }
-         
-         
-      //printf("Detectado expiração \n");
-      //while (1){
-      //   char *subString; // the "result"
-      //   subString = strtok(receive,"\n");
-      //    int resultado = atoi(subString);
-      //    if (resultado < 35 || resultado < 35){
-      //        break;
-      //      }
-      //    }
-      //  softPwmWrite (pino_PWM, 255);       
-      //}
-      //else{ 
-      //   printf("brilho [%d] \n",brilho);
-      //   softPwmWrite (pino_PWM, 0);   
-      // }
-
-      //  delay (10);
-      //usleep(100000); //espera 10ms = 10E-3 s     
-   }
+      }*/
+  // }
    
    close(file);
    return 0;
