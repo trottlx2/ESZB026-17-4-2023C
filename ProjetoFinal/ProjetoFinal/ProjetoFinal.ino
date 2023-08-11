@@ -40,9 +40,9 @@ void toca(unsigned long instante){
   int      notas[]={
     440,294,349,392,440,294,349,392,330};
   int     tempos[]={  
-    2,  2,  1,  1,  2,  2,  1,  1,  2  };
+    2,  2,  2,  1,  1,  1,  1,  1,  1 };
   int tempo_acum[]={  
-    2,  4,  5,  6,  8, 10, 11, 12, 14  };
+    2,  4,  6,  7,  8, 9, 10, 11, 12 };
 
   int n;
   for (n = 0; n<9; n++){
@@ -167,6 +167,8 @@ void loop(){
       toca(millis()-ultima_apnea);
     }
     
+    Serial.print("IF:"); 
+    Serial.print(apnea_flag); 
     
     coleta = false;
   }
