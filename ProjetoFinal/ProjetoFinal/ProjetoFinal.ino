@@ -38,7 +38,7 @@ void setup(){
 void toca(unsigned long instante){
   int tempo = 200;
   int      notas[]={
-    440,294,349,392,440,294,349,392,330  };
+    440,294,349,392,440,294,349,392,330};
   int     tempos[]={  
     2,  2,  1,  1,  2,  2,  1,  1,  2  };
   int tempo_acum[]={  
@@ -166,9 +166,7 @@ void loop(){
     if (apnea_flag){
       toca(millis()-ultima_apnea);
     }
-
-
-
+    
     
     coleta = false;
   }
