@@ -66,7 +66,7 @@ int main(){
       printf("\npegou\n");
      
       FILE *fp_saida;
-      fp_saida = fopen ("/home/pi/Projeto.txt", "w+");
+      fp_saida = fopen ("/home/pi/ESZB026-17-4-2023C/ProjetoFinal/Projeto.txt", "w+"); 
       for ( int ii = 0; ii < TAMANHO; ii++ )
       {
 		   fprintf(fp_saida,"%f %d\n", ii/10.0, lista_valores[ii]);
@@ -74,6 +74,17 @@ int main(){
 	   fclose(fp_saida);
       
       printf("gravou\n");
+      
+      
+      FILE *fp2_saida;
+      fp2_saida = fopen ("/home/pi/ESZB026-17-4-2023C/ProjetoFinal/N_apneia.txt", "w+"); 
+
+      fprintf(fp2_saida,"Quantidade de Apneia = %d\n", receive[4]);
+      fprintf(fp2_saida,"Quantidade de Apneia Grave= %d\n", receive[5]);
+	   fclose(fp2_saida);
+      
+      printf("gravou\n");
+
 
       /*int resultado = receive[6];
       if (count==0) ;//printf("Nao houve resposta!\n");

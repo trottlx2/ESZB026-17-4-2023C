@@ -1,0 +1,2 @@
+Quantidade de Apneia = 41
+Quantidade de Apneia Grave= 15
