@@ -129,8 +129,8 @@ void loop(){
       tmp_exp = 0;
       digitalWrite(7, LOW);
     }
-    else if( final > 60){
-      insp_flag = 1;
+    else if( final > 70){
+      insp_flag = 1;cd
       exp_flag = 0;
       insp_cont = 0;
       tmp_insp = 0;

@@ -7,15 +7,9 @@ echo "Content-type: text/html"
 echo ""
 echo '<HTML><HEAD><meta charset="UTF-8">'
 echo '<TITLE>Pagina CGI gerando figura</TITLE></HEAD>'
-echo '<BODY style="background-color:#FFFFE0"><H1>Página teste CGI e figuras.</H1>'
-echo 'Estou no diretório '
-pwd
-echo ', logado como o usuário '
-whoami
-echo '<pre>'
+echo '<BODY style="background-color:#FFFFE0"><H1>Relatório de Controle.</H1>'
+echo '<br>'
 cat $ARQUIVODADOS2
-echo '<pre>'
-echo '.<br>'
 echo '<h2>DADOS:</h2>'
 echo '<pre>'
 cat $ARQUIVODADOS
