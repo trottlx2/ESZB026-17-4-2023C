@@ -56,14 +56,12 @@ int main(){
       	 return -1;
       }
       
-      printf("Valores \t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t(%d)\n",receive[0],receive[1],receive[2],receive[3],receive[4],receive[5],receive[6],count);
       
       for (int i = 7; i< TAMANHO+7; i++){
          lista_valores[i-7] = receive[i];
          //printf("%d ",i);
       }
-      
-      printf("\npegou\n");
+
      
       FILE *fp_saida;
       fp_saida = fopen ("/home/pi/ESZB026-17-4-2023C/ProjetoFinal/Projeto.txt", "w+"); 
@@ -73,7 +71,7 @@ int main(){
 	   }
 	   fclose(fp_saida);
       
-      printf("gravou\n");
+      printf("Dados atualizados...\n");
       
       
       FILE *fp2_saida;
@@ -83,8 +81,6 @@ int main(){
       fprintf(fp2_saida,"Quantidade de Apneia Grave= %d\n", receive[5]);
 	   fclose(fp2_saida);
       
-      printf("gravou\n");
-
 
       /*int resultado = receive[6];
       if (count==0) ;//printf("Nao houve resposta!\n");
