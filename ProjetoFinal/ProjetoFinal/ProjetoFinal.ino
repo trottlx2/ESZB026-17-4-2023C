@@ -1,4 +1,4 @@
-#include <Thermistor.h>
+  #include <Thermistor.h>
 const int analogInPin = A0; // o potenciômetro esta ligado ao pino A0
 
 #define TEMPO_APNEA 100
@@ -38,11 +38,11 @@ void setup(){
 void toca(unsigned long instante){
   int tempo = 200;
   int      notas[]={
-    440,294,349,392,440,294,349,392,330};
+    440,305,349,392,440,305,349,392,330};
   int     tempos[]={  
-    2,  2,  2,  1,  1,  1,  1,  1,  1 };
+    2,  2, 1 ,  1,  2,  2,  1,  1,  2 };
   int tempo_acum[]={  
-    2,  4,  6,  7,  8, 9, 10, 11, 12 };
+    2,  4,  5,  6,  8, 10, 11, 12, 14 };
 
   int n;
   for (n = 0; n<9; n++){
@@ -130,7 +130,7 @@ void loop(){
       digitalWrite(7, LOW);
     }
     else if( final > 70){
-      insp_flag = 1;cd
+      insp_flag = 1;
       exp_flag = 0;
       insp_cont = 0;
       tmp_insp = 0;
@@ -148,7 +148,7 @@ void loop(){
       apneia = apneia + 1;
       tmp_insp = 1;
     }
-    if (exp_cont > TEMPO_APNEA && tmp_exp ==0){
+    if (exp_cont > TEMPO_APNEA && tmp_exp ==0){0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
       digitalWrite(7, HIGH);
       apneia = apneia + 1;
       tmp_exp = 1;
@@ -167,8 +167,8 @@ void loop(){
       toca(millis()-ultima_apnea);
     }
     
-    Serial.print("IF:"); 
-    Serial.print(apnea_flag); 
+//    Serial.print("IF:"); 
+ //   Serial.print(apnea_flag); 
     
     coleta = false;
   }
